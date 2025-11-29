@@ -1,0 +1,7 @@
+Type,Nom,Age (jours),Age de Production(jours),Genre,NourritureJour (g)
+Gallus,gallus1,844,210,Coq,121
+Gallus,gallus0,643,210,Poule,120
+Gallus,gallus2,756,180,Poule,120
+Gallus,Gallus3,20,240,Coq,120
+Gallus,Gallus5,1259,180,Coq,120
+Gallus,Gallus4,782,210,Poule,119

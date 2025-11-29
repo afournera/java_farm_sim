@@ -1,0 +1,56 @@
+//old Main.java code
+        /**
+        Ferme newFerme = new Ferme("la ferme ta gueule");
+
+        newFerme.setPrixLait(1.); // au litre
+        newFerme.setPrixOeuf(0.6); // a l'unite
+        newFerme.setPrixFoin(0.00011); // au g
+        newFerme.setPrixGraine(0.00065); // au g
+        newFerme.acheterNourriture("Foin", 10000000, 1100); // 110e la tonne de foin
+        newFerme.acheterNourriture("Graine", 1000000, 650); // 650 la tonne de graine
+
+        // definition d'animaux
+        Gallus gallus1 = new Gallus("gallus1");
+        Gallus gallus2 = new Gallus("gallus2");
+        Gallus gallus3 = new Gallus("gallus3");
+
+        Ovis ovis1 = new Ovis("Ovis1");
+        Ovis ovis2 = new Ovis("Ovis2");
+        Ovis ovis3 = new Ovis("Ovis3");
+
+        // ajout des animaux dans le cheptel
+        newFerme.ajouterAnimal(gallus1, 0);
+        newFerme.ajouterAnimal(gallus2, 0);
+        newFerme.ajouterAnimal(gallus3, 0);
+
+        newFerme.ajouterAnimal(ovis1, 0);
+        newFerme.ajouterAnimal(ovis2, 0);
+        newFerme.ajouterAnimal(ovis3, 0);
+
+        newFerme.afficherAnimaux();
+        newFerme.initJour();
+
+        // affichage des jour un a un
+        for (int i = 1; i < 70; i++) {
+            System.out.println(">>>Jour " + i);
+            System.out.println(newFerme);
+            newFerme.jourSuivant();
+        }
+        // System.out.println(">>> Vente des produits...");
+        // newFerme.vendreProd(); // derniere vente de la ferme
+        System.out.println(newFerme);
+
+        System.out.println(">>> Saving ferme data...");
+        newFerme.saveFermeData("ferme_data.csv");
+        System.out.println(">>> Saving animal data...");
+        newFerme.saveAnimalData("animal_data.csv");
+        
+
+        Ferme maFerme= FermeReader.loadFerme("ferme_data.csv", "animal_data.csv");
+
+        if (maFerme != null){
+            System.out.println("Farm loaded successfully!");
+            System.out.println(maFerme);
+            maFerme.afficherAnimaux();
+        }
+        */

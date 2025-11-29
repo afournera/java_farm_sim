@@ -1,0 +1,6 @@
+# Ignore compiled Java class files
+*.class
+
+# Ignore legacy farm version
+acp/ferme/
+acp/fermev2/
