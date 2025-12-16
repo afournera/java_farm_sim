@@ -73,4 +73,4 @@ Exemple de menu :
 
   * Ce projet est réalisé dans un cadre académique pour démontrer la maîtrise des structures objets en Java.
   * La gestion des prix du marché (`Market.java`) est une fonctionnalité en cours de développement (WIP) (qui ne le sera jamais) visant à introduire une volatilité des prix basée sur un mouvement brownien géométrique.
-  *ce readme a été rédiger a l'aide de gemini ^^ <3
+  * ce readme a été rédiger a l'aide de gemini ^^ <3
