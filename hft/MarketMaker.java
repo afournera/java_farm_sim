@@ -6,6 +6,8 @@ public class MarketMaker extends Bot{
     private static final BigDecimal SPREAD = new BigDecimal("0.05"); 
     private static final long qty = 10;
 
+    private BigDecimal lastPrice = BigDecimal.ZERO;
+
     public MarketMaker(Book book, Pricer pricer, int id){
         super(book, pricer, id);
     }
@@ -13,6 +15,13 @@ public class MarketMaker extends Bot{
     @Override
     public void trade(){
         BigDecimal value = pricer.getPrice();
+
+        // If currentPrice == lastObservedPrice, do nothing.
+        if (value.compareTo(lastPrice) == 0) {
+            return; 
+        }
+
+        this.lastPrice = value;
 
         BigDecimal bidPrice = value.subtract(SPREAD);
         BigDecimal askPrice = value.add(SPREAD);
