@@ -31,6 +31,10 @@ public class Main {
         //set prix oeuf et prix lait
         newFerme.setPrixLait(PRIX_LAIT);
         newFerme.setPrixOeuf(PRIX_OEUF);
+        newFerme.setPrixFoin(PRIX_FOIN_KG);
+        newFerme.setPrixGraine(PRIX_GRAINE_KG);
+
+        newFerme.initMarket();
 
         Scanner scanner = new Scanner(System.in);
         boolean running = true;

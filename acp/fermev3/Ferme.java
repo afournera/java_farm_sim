@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
 import java.util.Comparator;
+import java.math.BigDecimal;
+
+import hft.Pricer;
+
 
 public class Ferme {
     private double capital;
@@ -17,6 +21,7 @@ public class Ferme {
     private HashMap<String, Integer> stockProd;
     private HashMap<String, Integer> stockNour;
     private HashMap<String, Double> grilleTarifs;
+    private HashMap<String, Pricer> marketPricer;
     public static final String OEUF = "Oeuf";
     public static final String LAIT = "Lait";
     public static final String FOIN = "Foin";
@@ -271,6 +276,7 @@ public class Ferme {
             }
         }
         this.cheptel.removeAll(mortDuJour);
+        updateMarketPrice();
     }
 
     // toString
@@ -330,6 +336,46 @@ public class Ferme {
             System.out.println(">>> Animal data saved to " + nomFichier);
         }catch (IOException e){
             System.err.println("Erreur en ecrivant le csv :" + nomFichier + " " + e.getMessage());
+        }
+    }
+
+    //market related methods
+    public void initMarket(){
+        this.marketPricer = new HashMap<>();
+        double delta_t = 1/Utils.JOURS_PAR_AN;
+
+        for(String prod : this.grilleTarifs.keySet()){
+            double currentPrice = this.grilleTarifs.get(prod);
+
+            //on construit un pricer
+            //volatilite : 10% (aberrant pour des matières premières comme les oeufs mais osef)
+            //drift : 0.02 pour l'inflation (2% en temps normal)
+            Pricer p = new Pricer(
+                BigDecimal.valueOf(currentPrice), 
+                0.1, 
+                0.02, 
+                delta_t);
+
+            this.marketPricer.put(prod, p);
+        }
+        System.out.println(">>> Marché initialisé");
+    }
+
+    public void updateMarketPrice(){
+        if(this.marketPricer == null){
+            initMarket();
+        }
+
+        System.out.println("Evolution du marché:");
+        for(String prod : this.marketPricer.keySet()){
+            Pricer p = this.marketPricer.get(prod);
+
+            BigDecimal newPriceBD = p.tick();
+
+            double newPrice = newPriceBD.doubleValue();
+
+            this.grilleTarifs.put(prod, newPrice);
+            System.out.printf("     - %-6s : %.2f ecu/kg %n", prod, newPrice);
         }
     }
 }
