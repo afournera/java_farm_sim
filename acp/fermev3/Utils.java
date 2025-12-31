@@ -10,8 +10,9 @@ public class Utils {
     // negatifs...
     public static double generateRandom(int moy) {
         double rdm;
+        double sigma = moy*0.2;
         do {
-            rdm = (double) (moy + Utils.rnd.nextGaussian());
+            rdm = moy + (sigma*Utils.rnd.nextGaussian());
         } while (rdm <= 0);
         return rdm;
     }

@@ -1,0 +1,9 @@
+Type,Nom,Age (jours),Age de Production(jours),Genre,NourritureJour (g)
+Gallus,gallus1,838,150,Poule,104
+Gallus,gallus0,736,240,Poule,125
+Gallus,gallus2,889,240,Coq,120
+Ovis,Ovis1,757,240,Brebis,3481
+Ovis,Ovis2,537,360,Bélier,4771
+Ovis,Ovis3,887,390,Brebis,3900
+Ovis,Ovis0,475,480,Bélier,3270
+Ovis,Ovis4,663,510,Brebis,3841

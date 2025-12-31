@@ -310,7 +310,7 @@ public class Ferme {
             sb.append("nom:jour:capital:stock_graines:stock_foin:stock_oeufs:stock_lait\n");
             writer.write(sb.toString());
 
-            writer.printf("%s:%d:%.2f:%d:%d:%d:%d%n",
+            writer.printf(java.util.Locale.US, "%s:%d:%.2f:%d:%d:%d:%d%n",
                     this.nom,
                     this.jour,
                     this.capital,
@@ -333,7 +333,7 @@ public class Ferme {
             writer.write(sb.toString());
 
             for (Animal a : this.cheptel){
-                writer.printf("%s:%s:%b:%d:%d:%d:%d:%d:%d%n",
+                writer.printf(java.util.Locale.US, "%s:%s:%b:%d:%d:%d:%d:%d:%d%n",
                         a.getClass().getSimpleName(),
                         a.getNom(),
                         a.getGenre(),
