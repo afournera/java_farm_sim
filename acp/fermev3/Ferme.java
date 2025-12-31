@@ -239,17 +239,20 @@ public class Ferme {
             int stockProdActuel;
             String nourritureType = a.getNourritureType();
             String ressourceType = a.getRessourceType();
-            // 3. l'animal vieilli
-            a.vieillir(); // on note que je fais vieillir l'animal avant l'avoir fait produire
-            // 2. nourriture et production
-            int prod = a.produire();
-            int restNour = a.nourrir(a.getRation());
-            // Modification des stocks de nourriture et production
 
+            // 2. l'animal vieilli
+            a.vieillir(); // on note que je fais vieillir l'animal avant l'avoir fait produire
+
+            // 3. nourriture et production
+            int prod = a.produire();
+
+            // Modification des stocks de nourriture et production
             stockNourActuel = this.stockNour.get(nourritureType);
-            if (stockNourActuel - a.getRation() >= 0){
-                this.stockNour.put(nourritureType, stockNourActuel
-                        - a.getRation() + restNour);
+            int qteDonnee = Math.min(stockNourActuel, a.getRation());
+
+            if (qteDonnee > 0){
+                int restNour = a.nourrir(qteDonnee);
+                this.stockNour.put(nourritureType, stockNourActuel - qteDonnee + restNour);
             }else{
                 System.out.println("stock de " + nourritureType + " vide!!!");
                 System.out.println(a.getNom() + " n'a pas été nourri aujourd'hui");
@@ -261,6 +264,8 @@ public class Ferme {
                         a.getRation() * this.grilleTarifs.get(nourritureType) * 60);
                 */
             }
+
+            //mise a jour de la production
             stockProdActuel = this.stockProd.get(ressourceType);
             this.stockProd.put(ressourceType, stockProdActuel
                     + prod);

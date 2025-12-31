@@ -27,7 +27,7 @@ public abstract class Animal implements Comparable<Animal>{
             this.nourritures[0] += qte;
             return 0;
         } else {
-            reste = this.nourritures[2] - this.nourritures[0] + qte;
+            reste = this.nourritures[0] - this.nourritures[2] + qte;
             this.nourritures[0] = this.nourritures[2];
             return reste;
         }
