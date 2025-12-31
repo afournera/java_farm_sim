@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 public class Main {
     //prix comme defini dans le sujet
-    public static final double PRIX_POULE = 10.;
-    public static final double PRIX_MOUTON = 120.;
-    public static final double PRIX_FOIN_KG = 10.;
-    public static final double PRIX_GRAINE_KG = 5.;
+    public static final double pGallus = 10.;
+    public static final double pOvis = 120.;
+    public static final double pFoin = 10.;
+    public static final double pGraine = 5.;
     public static final double PRIX_LAIT = 1.; //au litre
     public static final double PRIX_OEUF = 0.6; // a l'unité
 
@@ -28,11 +28,13 @@ public class Main {
         //pour la boucle
         Ovis newOvis = new Ovis("Shaun");
 
-        //set prix oeuf et prix lait
-        newFerme.setPrixLait(PRIX_LAIT);
-        newFerme.setPrixOeuf(PRIX_OEUF);
-        newFerme.setPrixFoin(PRIX_FOIN_KG);
-        newFerme.setPrixGraine(PRIX_GRAINE_KG);
+        //setup des prix
+        newFerme.setTarif(Ferme.GALLUS, pGallus);
+        newFerme.setTarif(Ferme.OVIS, pOvis);
+        newFerme.setTarif(Ferme.LAIT, 1.0);
+        newFerme.setTarif(Ferme.OEUF, 0.6);
+        newFerme.setTarif(Ferme.FOIN, pFoin);
+        newFerme.setTarif(Ferme.GRAINE, 5.0);
 
         newFerme.initMarket();
 
@@ -54,13 +56,19 @@ public class Main {
                 int choix = scanner.nextInt();
                 scanner.nextLine();
 
+                //get des prix
+                double pGallus = newFerme.getTarif(Ferme.GALLUS);
+                double pOvis = newFerme.getTarif(Ferme.OVIS);
+                double pFoin = newFerme.getTarif(Ferme.FOIN);
+                double pGraine = newFerme.getTarif(Ferme.GRAINE);
+
                 switch(choix){
                     case 1: {//achat d'une poule
-                        System.out.println(">>> Achat d'un gallus (" + PRIX_POULE + "écus)...");
-                        if(newFerme.getCapital() >= PRIX_POULE){
+                        System.out.println(">>> Achat d'un gallus (" + pGallus + "écus)...");
+                        if(newFerme.getCapital() >= pGallus){
                             String nomNewGallus = "Gallus" + (gallusSequence++);
                             newGallus = new Gallus(nomNewGallus);
-                            newFerme.ajouterAnimal(newGallus, PRIX_POULE);
+                            newFerme.ajouterAnimal(newGallus, pGallus);
                             actionJour++;
                             System.out.println(">>> Achat effectué!");
                         }else{
@@ -70,11 +78,11 @@ public class Main {
                     }
 
                     case 2: {//achat d'un ovis
-                        System.out.println(">>> Achat d'un ovis (" + PRIX_MOUTON + "écus)...");
-                        if(newFerme.getCapital() >= PRIX_MOUTON){
+                        System.out.println(">>> Achat d'un ovis (" + pOvis + "écus)...");
+                        if(newFerme.getCapital() >= pOvis){
                             String nomNewOvis = "Ovis" + (ovisSequence++);
                             newOvis = new Ovis(nomNewOvis);
-                            newFerme.ajouterAnimal(newOvis, PRIX_MOUTON);
+                            newFerme.ajouterAnimal(newOvis, pOvis);
                             actionJour++;
                             System.out.println(">>> Achat effectué!");
                         }else{
@@ -97,7 +105,7 @@ public class Main {
                             scanner.nextLine();
 
                             if (qteFoin > 0){
-                                double coutTotal = qteFoin*PRIX_FOIN_KG;
+                                double coutTotal = qteFoin*pFoin;
                                 newFerme.acheterNourriture("Foin", 1000*qteFoin, coutTotal);
                                 System.out.println("Achat de Foin pour " + coutTotal + " écu effectué.");
                                 actionJour++;
@@ -117,7 +125,7 @@ public class Main {
                             scanner.nextLine();
 
                             if (qteGraine > 0){
-                                double coutTotal = qteGraine*PRIX_GRAINE_KG;
+                                double coutTotal = qteGraine*pGraine;
                                 newFerme.acheterNourriture("Graine", 1000*qteGraine, coutTotal);
                                 System.out.println("Achat de graines pour " + coutTotal + " écu effectué.");
                                 actionJour++;
@@ -234,11 +242,11 @@ public class Main {
 
         //interface
         System.out.println("========================================");
-        System.out.println("[1] Acheter un gallus (" + PRIX_POULE + " écu)");
-        System.out.println("[2] Acheter un ovis (" + PRIX_MOUTON + " écu)");
+        System.out.printf("[1] Acheter un gallus (%.2f écu)\n", ferme.getTarif(Ferme.GALLUS));
+        System.out.printf("[2] Acheter un ovis (%.2f écu)\n", ferme.getTarif(Ferme.OVIS));
         System.out.println("[3] Vendre la production");
-        System.out.println("[4] Acheter du foin (" + PRIX_FOIN_KG + " écu/kg)");
-        System.out.println("[5] Acheter des graines (" + PRIX_GRAINE_KG + " écu/kg) \n");
+        System.out.printf("[4] Acheter du foin (%.2f écu/kg)\n", ferme.getTarif(Ferme.FOIN));
+        System.out.printf("[5] Acheter des graines (%.2f écu/kg)\n \n", ferme.getTarif(Ferme.GRAINE));
         System.out.println("........................................");
         System.out.println("[6] Jour suivant \n");
         System.out.println("----------------------------------------");

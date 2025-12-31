@@ -26,6 +26,8 @@ public class Ferme {
     public static final String LAIT = "Lait";
     public static final String FOIN = "Foin";
     public static final String GRAINE = "Graine";
+    public static final String GALLUS = "Gallus";
+    public static final String OVIS = "Ovis";
 
     public Ferme(String nom, double capital){
         this.nom = nom;
@@ -44,6 +46,8 @@ public class Ferme {
         this.grilleTarifs.put(LAIT, 0.0);
         this.grilleTarifs.put(FOIN, 0.0);
         this.grilleTarifs.put(GRAINE, 0.0);
+        this.grilleTarifs.put(GALLUS, 0.0);
+        this.grilleTarifs.put(OVIS, 0.0);
     }
 
     public Ferme(String nom) {
@@ -93,21 +97,13 @@ public class Ferme {
                + " | Gallus: " + nbGallus + " (" + nbCoq + " coq(s))";
     }
 
+    public double getTarif(String item){
+        return this.grilleTarifs.getOrDefault(item, 0.0);
+    }
+
     // set methods
-    public void setPrixLait(double p){
-        this.grilleTarifs.put(LAIT, p);
-    }
-
-    public void setPrixOeuf(double p){
-        this.grilleTarifs.put(OEUF, p);
-    }
-
-    public void setPrixFoin(double p){
-        this.grilleTarifs.put(FOIN, p);
-    }
-
-    public void setPrixGraine(double p){
-        this.grilleTarifs.put(GRAINE, p);
+    public void setTarif(String item, double prix){
+        this.grilleTarifs.put(item, prix);
     }
 
     public void setStockProd(String item, Integer qte){
@@ -282,15 +278,26 @@ public class Ferme {
     // toString
     @Override
     public String toString(){
-        return this.nom + " (jour " + this.jour + ") " + this.capital + "écu"
-                + " | Oeuf: " + this.stockProd.get("Oeuf") + "u"
-                + " | Lait: " + this.stockProd.get("Lait") + "L"
-                + " | Foin:" + this.stockNour.get("Foin") / 1000 + "kg"
-                + " | Graine: " + this.stockNour.get("Graine") / 1000 + "kg"
-                + " | Prix des Oeufs: " + this.grilleTarifs.get(OEUF) + "écu/u"
-                + " | Prix du Lait: " + this.grilleTarifs.get(LAIT) + "écu/L";
+        return String.format("%s (jour %d) %.2fécu"
+            + " | Oeuf: %du"
+            + " | Lait: %dL"
+            + " | Foin: %dkg"
+            + " | Graine: %dkg"
+            + " | Prix des oeufs: %.2fécu/u"
+            + " | Prix du lait: %.2fécu/L",
+            this.nom,
+            this.jour,
+            this.capital,
+            this.stockProd.get(OEUF),
+            this.stockProd.get(LAIT),
+            this.stockNour.get(FOIN)/1000,
+            this.stockNour.get(GRAINE)/1000,
+            this.grilleTarifs.get(OEUF),
+            this.grilleTarifs.get(LAIT)
+        );
     }
 
+    //download/upload related
     public void saveFermeData(String nomFichier){
         try (PrintWriter writer = new PrintWriter(new File(nomFichier))) {
             System.out.println(">>> Trying to save ferme data to " + nomFichier + "...");
@@ -345,8 +352,12 @@ public class Ferme {
         double delta_t = 1/Utils.JOURS_PAR_AN;
 
         for(String prod : this.grilleTarifs.keySet()){
-            double currentPrice = this.grilleTarifs.get(prod);
+            //les animaux ne compte pas car peut volatile.
+            if (prod.equals(GALLUS) || prod.equals(OVIS)) {
+                continue; 
+            }
 
+            double currentPrice = this.grilleTarifs.get(prod);
             //on construit un pricer
             //volatilite : 10% (aberrant pour des matières premières comme les oeufs mais osef)
             //drift : 0.02 pour l'inflation (2% en temps normal)
